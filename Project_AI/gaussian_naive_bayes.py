@@ -1,7 +1,7 @@
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
+
 
 class GaussianNaiveBayes:
     def __init__(self):
@@ -69,9 +69,9 @@ class GaussianNaiveBayes:
 # Main function to train and test the model
 if __name__ == "__main__":
     # Load the training and test data
-    train_features = np.load("train_features.npy")
+    train_features = np.load("train_features_pca.npy")
     train_labels = np.load("train_labels.npy")
-    test_features = np.load("test_features.npy")
+    test_features = np.load("test_features_pca.npy")
     test_labels = np.load("test_labels.npy")
 
     # Initialize and train the model
