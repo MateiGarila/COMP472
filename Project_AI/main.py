@@ -100,8 +100,8 @@ print("Sample Test Feature Vector:", test_features_pca[0])
 print("Number of Training Features:", len(train_features_pca))
 print("Number of Test Features:", len(test_features_pca))
 
-print("Train labels:", train_labels)
-print("Test labels:", test_labels)
+# print("Train labels:", train_labels)
+# print("Test labels:", test_labels)
 
 # Reduce to 2D for visualization
 tsne = TSNE(n_components=2, random_state=42)

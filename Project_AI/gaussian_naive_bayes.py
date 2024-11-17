@@ -37,7 +37,7 @@ class GaussianNaiveBayes:
         """
         Compute the Gaussian probability density function for a given feature.
         """
-        epsilon = 1e-6  # Small constant to avoid division by zero
+        epsilon = 1e-9  # Small constant to avoid division by zero
         coef = 1.0 / np.sqrt(2.0 * np.pi * (variance + epsilon))
         exponent = np.exp(-((x - mean) ** 2) / (2.0 * (variance + epsilon)))
         return coef * exponent
