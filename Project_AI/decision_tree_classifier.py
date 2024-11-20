@@ -136,7 +136,7 @@ if __name__ == "__main__":
     # plt.show()
 
     # Train and test the Decision Tree classifier with max_depth=50
-    clf = DecisionTreeClassifier(criterion='gini', max_depth=50, random_state=42)
+    clf = DecisionTreeClassifier(criterion='gini', max_depth=20, random_state=42)
     clf.fit(train_features, train_labels)
 
     # Predict on the test set

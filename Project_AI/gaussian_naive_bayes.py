@@ -37,7 +37,7 @@ class GaussianNaiveBayes:
         """
         Compute the Gaussian probability density function for a given feature.
         """
-        epsilon = 1e-9  # Small constant to avoid division by zero
+        epsilon = 1e-6  # Small constant to avoid division by zero
         coef = 1.0 / np.sqrt(2.0 * np.pi * (variance + epsilon))
         exponent = np.exp(-((x - mean) ** 2) / (2.0 * (variance + epsilon)))
         return coef * exponent
@@ -70,9 +70,9 @@ class GaussianNaiveBayes:
 if __name__ == "__main__":
     # Load the training and test data
     train_features = np.load("train_features_pca.npy")
-    train_labels = np.load("train_labels.npy")
+    train_labels = np.load("training_labels.npy")
     test_features = np.load("test_features_pca.npy")
-    test_labels = np.load("test_labels.npy")
+    test_labels = np.load("testing_labels.npy")
 
     # Initialize and train the model
     model = GaussianNaiveBayes()
