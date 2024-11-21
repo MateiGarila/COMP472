@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
+from joblib import dump, load
 from sklearn.metrics import accuracy_score
 
 
@@ -102,20 +103,22 @@ class DecisionTree:
 if __name__ == "__main__":
     # Load the training and test data
     train_features = np.load("train_features_pca.npy")
-    train_labels = np.load("train_labels.npy")
+    train_labels = np.load("training_labels.npy")
     test_features = np.load("test_features_pca.npy")
-    test_labels = np.load("test_labels.npy")
+    test_labels = np.load("testing_labels.npy")
 
-    # Train the decision tree with max_depth=50
-    dt = DecisionTree(max_depth=20)
-    dt.fit(train_features, train_labels)
-
-    # Predict on the test set
-    predictions = dt.predict(test_features)
-
-    # Calculate accuracy
-    accuracy = np.mean(predictions == test_labels) * 100
-    print(f"Decision Tree Accuracy (max_depth=50): {accuracy:.2f}%")
+    # # Train the decision tree with max_depth=50
+    # dt = DecisionTree(max_depth=50)
+    # dt.fit(train_features, train_labels)
+    # print("Finished training the model")
+    #
+    # # Predict on the test set
+    # predictions = dt.predict(test_features)
+    # print("Finished predicting test features")
+    #
+    # # Calculate accuracy
+    # accuracy = np.mean(predictions == test_labels) * 100
+    # print(f"Decision Tree Accuracy (max_depth=50): {accuracy:.2f}%")
 
     # depths = [1, 5, 10, 20, 50]
     # accuracies = []
@@ -136,8 +139,10 @@ if __name__ == "__main__":
     # plt.show()
 
     # Train and test the Decision Tree classifier with max_depth=50
-    clf = DecisionTreeClassifier(criterion='gini', max_depth=20, random_state=42)
+    clf = DecisionTreeClassifier(criterion='gini', max_depth=50, random_state=42)
     clf.fit(train_features, train_labels)
+
+    dump(clf, "decision_tree_classifier.joblib")
 
     # Predict on the test set
     predictions = clf.predict(test_features)
