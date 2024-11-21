@@ -37,7 +37,7 @@ class GaussianNaiveBayes:
     """
     def _gaussian_density(self, image, mean, variance):
 
-        epsilon = 1e-6  # Small constant to avoid division by zero
+        epsilon = 1e-9  # Small constant to avoid division by zero
         coef = 1.0 / np.sqrt(2.0 * np.pi * (variance + epsilon))
         exponent = np.exp(-((image - mean) ** 2) / (2.0 * (variance + epsilon)))
         return coef * exponent
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     # Calculate accuracy
     accuracy = np.mean(predictions == test_labels) * 100
-    print(f"Gaussian Naive Bayes Accuracy: {accuracy:.2f}%\n")
+    print(f"Gaussian Naive Bayes Accuracy: {accuracy:.2f}%")
 
     # CIFAR-10 class labels
     class_names = [
@@ -98,7 +98,7 @@ if __name__ == "__main__":
                 xticklabels=class_names, yticklabels=class_names)
     plt.xlabel("Predicted Labels")
     plt.ylabel("True Labels")
-    plt.title("Normalized Confusion Matrix for Gaussian Naive Bayes")
+    plt.title("Normalized Confusion Matrix for Custom Gaussian Naive Bayes")
     plt.show()
 
     # Compute metrics
@@ -107,10 +107,10 @@ if __name__ == "__main__":
     recall = recall_score(test_labels, predictions, average="weighted")
     f1 = f1_score(test_labels, predictions, average="weighted")
 
-    print(f"Accuracy: {accuracy:.2f}")
-    print(f"Precision: {precision:.2f}")
-    print(f"Recall: {recall:.2f}")
-    print(f"F1-Score: {f1:.2f}\n")
+    print(f"Custom Accuracy: {accuracy:.2f}")
+    print(f"Custom Precision: {precision:.2f}")
+    print(f"Custom Recall: {recall:.2f}")
+    print(f"Custom F1-Score: {f1:.2f}\n")
 
     # Initialize the Gaussian Naive Bayes classifier
     # To use saved trained model comment out the training and saving lines
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     # Train the model
     gnb.fit(train_features, train_labels)
 
-    # Save the model - to use saved model comment until this line
+    # Save the model - to use saved model comment until this line (123)
     dump(gnb, "gaussian_naive_bayes_model.joblib")
 
     # This is the saved trained model
@@ -131,3 +131,29 @@ if __name__ == "__main__":
     # Calculate the accuracy
     accuracy = (accuracy_score(test_labels, y_pred)) * 100
     print(f'Sklearn model Accuracy: {accuracy:.2f}%')
+
+    # Generate the confusion matrix
+    cm = confusion_matrix(test_labels, y_pred)
+
+    # Normalize the confusion matrix for better visualization (optional)
+    cm_normalized = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+
+    # Plot the confusion matrix
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(cm_normalized, annot=True, fmt=".2f", cmap="Blues",
+                xticklabels=class_names, yticklabels=class_names)
+    plt.xlabel("Predicted Labels")
+    plt.ylabel("True Labels")
+    plt.title("Normalized Confusion Matrix for Sklearn Gaussian Naive Bayes")
+    plt.show()
+
+    # Compute metrics
+    accuracy = accuracy_score(test_labels, y_pred)
+    precision = precision_score(test_labels, y_pred, average="weighted")  # Weighted by class frequency
+    recall = recall_score(test_labels, y_pred, average="weighted")
+    f1 = f1_score(test_labels, y_pred, average="weighted")
+
+    print(f"Sklearn Accuracy: {accuracy:.2f}")
+    print(f"Sklearn Precision: {precision:.2f}")
+    print(f"Sklearn Recall: {recall:.2f}")
+    print(f"Sklearn F1-Score: {f1:.2f}\n")
