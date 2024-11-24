@@ -1,3 +1,6 @@
+import os
+import pickle
+
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -69,12 +72,28 @@ if __name__ == "__main__":
     test_features = np.load("test_features_pca.npy")
     test_labels = np.load("testing_labels.npy")
 
-    # Initialize and train the model
-    model = GaussianNaiveBayes()
-    model.fit(train_features, train_labels)
+    # Check if the model is already saved
+    model_file = "GaussianNaiveBayes/gaussian_naive_bayes_model.pkl"
+
+    if os.path.exists(model_file):
+        # Load the pre-trained model
+        with open(model_file, "rb") as file:
+            model = pickle.load(file)
+        print("Loaded the pre-trained Gaussian Naive Bayes model")
+    else:
+        # Initialize and train the Gaussian Naive Bayes model
+        model = GaussianNaiveBayes()
+        model.fit(train_features, train_labels)
+        print("Finished training the Gaussian Naive Bayes model")
+
+        # Save the trained model
+        with open(model_file, "wb") as file:
+            pickle.dump(model, file)
+        print("Saved the trained Gaussian Naive Bayes model")
 
     # Predict the labels for the test set
     predictions = model.predict(test_features)
+    print("Finished predicting test features")
 
     # Calculate accuracy
     accuracy = np.mean(predictions == test_labels) * 100
@@ -120,10 +139,10 @@ if __name__ == "__main__":
     gnb.fit(train_features, train_labels)
 
     # Save the model - to use saved model comment until this line (123)
-    dump(gnb, "gaussian_naive_bayes_model.joblib")
+    dump(gnb, "GaussianNaiveBayes/gaussian_naive_bayes_modelSK.joblib")
 
     # This is the saved trained model
-    # gnb = load("gaussian_naive_bayes_model.joblib")
+    # gnb = load("GaussianNaiveBayes/gaussian_naive_bayes_modelSK.joblib")
 
     # Predict the labels for the test set
     y_pred = gnb.predict(test_features)
