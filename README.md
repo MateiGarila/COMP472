@@ -33,8 +33,8 @@ Team members:
 The output of the algorithm will be printed on the terminal. Additionally, the saved model will be saved in its respective folder.
 Note that some Python files run both our custom implementations of the algorithms and a variant provided by sklearn. Such files save all the models in the appropriate folders.
 
-**IMPORTANT** note that the saved pre-trained CNN algorithm (.pth) could not be included in the repo, as it exceeds github's file size limit (proof below).
+**IMPORTANT**: note that the saved pre-trained CNN algorithm (.pth) could not be included in the repo, as it exceeds github's file size limit (proof below).
 ![image](https://github.com/user-attachments/assets/e6792903-7a62-4956-8ff7-19ce41b7ea04)
-Nonetheless, running CNN.py will work perfectly, without issues. We just couldn't include the pre-trained version bc of how heavy the file is.
+Nonetheless, running CNN.py will work perfectly, without issues. We just couldn't include the pre-trained version bc of how heavy the file is. The file can still be found in our Moodle submission.
 
 PS: an extensive running guide can also be found in our report, in pdf format. Due to the size of the guide, we felt it was more appropriate to have it displayed in pdf form, with screenshots.
