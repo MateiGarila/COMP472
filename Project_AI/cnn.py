@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -69,8 +70,9 @@ class VGG11(nn.Module):
         return x
 
 
-def train_model(model, train_loader, criterion, optimizer, device, epochs=20):
+def train_model(model, train_loader, criterion, optimizer, device, epochs=20, save_path="./cnn"):
     model.train()
+    os.makedirs(save_path, exist_ok=True)  # Ensure the save directory exists
     for epoch in range(epochs):
         running_loss = 0.0
         for images, labels in train_loader:
@@ -89,6 +91,11 @@ def train_model(model, train_loader, criterion, optimizer, device, epochs=20):
 
             running_loss += loss.item()
         print(f"Epoch [{epoch + 1}/{epochs}], Loss: {running_loss / len(train_loader):.4f}")
+
+    # Save the trained model
+    model_path = os.path.join(save_path, "cnn_model.pth")
+    torch.save(model.state_dict(), model_path)
+    print(f"Model saved to {model_path}")
 
 
 def evaluate_model(model, test_loader, device):
@@ -135,7 +142,7 @@ if __name__ == "__main__":
     optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
     # Train the model
-    train_model(model, train_loader, criterion, optimizer, device, epochs=20)
+    train_model(model, train_loader, criterion, optimizer, device, epochs=20, save_path="./cnn")
 
     # Evaluate the model
     true_labels, predictions = evaluate_model(model, test_loader, device)
@@ -163,3 +170,5 @@ if __name__ == "__main__":
     plt.ylabel("True Labels")
     plt.title("Normalized Confusion Matrix for VGG11")
     plt.show()
+
+
